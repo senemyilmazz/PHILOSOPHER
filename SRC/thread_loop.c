@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:30:20 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/11 18:41:12 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 07:45:13 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	eating(t_philos *philo)
 
 void	*life_cycle(void *ph)
 {
-	t_philos *philo;
+	t_philos	*philo;
 
 	philo = (t_philos *)ph;
 	calculate(philo->start_time, philo, 1);
@@ -60,7 +60,7 @@ void	*life_cycle(void *ph)
 	get_time(philo);
 	while (1)
 	{
-		usleep(200);
+		usleep(50);
 		if (eating(philo))
 			break ;
 		if (count_of_meal(philo, 1) == 0)

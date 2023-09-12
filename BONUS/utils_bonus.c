@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:57:26 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/11 23:19:05 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:15:11 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,9 @@ int	print_error(char *str)
 	return (0);
 }
 
-void	ft_print(t_philos *philo, char *str, int f)
+void	ft_print(t_philos *philo, char *str)
 {
-	if (am_i_dead(philo, f))
-		exit(1);
-	sem_wait(philo->print);
+	sem_wait(philo->data->print);
 	printf("%lu %d %s", get_time(philo), philo->id, str);
-	sem_post(philo->print);
+	sem_post(philo->data->print);
 }

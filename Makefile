@@ -10,7 +10,7 @@ SRCS = 	./SRC/main.c \
 SRCB =	./BONUS/main_bonus.c \
 		./BONUS/eating_utils_bonus.c \
 		./BONUS/fill_struct_bonus.c \
-		./BONUS/kill_or_stop_bonus.c \
+		./BONUS/terminator_bonus.c \
 		./BONUS/life_cycle_bonus.c \
 		./BONUS/time_bonus.c \
 		./BONUS/utils_bonus.c

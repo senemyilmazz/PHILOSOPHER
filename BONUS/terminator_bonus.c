@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kill_or_stop.c                                     :+:      :+:    :+:   */
+/*   terminator_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:54:10 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/11 23:33:45 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:15:19 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-int	am_i_dead(t_philos *philo, int f)
+void	*am_i_dead(void *ph)
 {
-	if (count_of_meal(philo, 0) != 0)
+	t_philos	*philo;
+
+	philo = (t_philos *)ph;
+	while (1)
 	{
-		if (philo->must_eat_time < get_time(philo))
+		usleep(200);
+		if (count_of_meal(philo, 0) != 0)
 		{
-			if (f == 1)
-				sem_post(philo->forks);
-			if (f == 2)
-				leave_forks(philo);
-			sem_wait(philo->print);
-			printf("%lu %d is dead\n", get_time(philo), philo->id);
-			return (1);
+			sem_wait(philo->data->starve);
+			if (philo->must_eat_time < get_time(philo))
+			{
+				sem_wait(philo->data->print);
+				printf("%lu %d died\n", get_time(philo), philo->id);
+				exit (1);
+			}
+			sem_post(philo->data->starve);
 		}
 	}
-	return (0);
+	return (NULL);
 }

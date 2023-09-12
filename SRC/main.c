@@ -6,13 +6,13 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:37:41 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/11 15:21:36 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 03:01:14 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	kill_or_stop(t_struct *data) //main_thread
+static void	kill_or_stop(t_struct *data)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ static void	kill_or_stop(t_struct *data) //main_thread
 	}
 }
 
-static int	let_the_game_begin(t_struct *data, t_philos *philo) //create_thread
+static int	let_the_game_begin(t_struct *data, t_philos *philo)
 {
 	int	i;
 
