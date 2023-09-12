@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:31:06 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 19:22:40 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 19:52:36 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ static void	grim_reaper(int *pid, int philo_num)
 	}
 }
 
-static int	let_the_game_begin(t_philos *philo, int philo_num)
+static int	let_the_game_begin(t_data *data, int philo_num)
 {
-	int	i;
+	int			i;
+	t_philos	*philo;
 
+	philo = data->philo;
 	i = -1;
 	while (++i < philo_num)
 	{
@@ -61,7 +63,7 @@ int	main(int argc, char **argv)
 			return (print_error("Allocation Error\n"));
 		if (fill_data(data, argv) == 0)
 			return (0);
-		let_the_game_begin(data->philo, ft_atoi(argv[1]));
+		let_the_game_begin(data, ft_atoi(argv[1]));
 	}
 	return (0);
 }

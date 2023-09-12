@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:02:30 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 18:37:00 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:05:18 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,10 @@ int					ft_atoi(const char *str);
 void				*life_cycle(void *ph);
 int					count_of_meal(t_philos *philo, int flag);
 int					fill_data(t_data *data, char **argv);
-void				*am_i_dead(void *ph);
+void				*am_i_dead(t_philos *philo);
 unsigned long		get_time(t_philos *philo);
 void				eating_proccess(t_philos *philo);
-void				leave_forks(t_philos *philo);
 void				ft_print(t_philos *philo, char *str);
-void				calculate(unsigned long *time, t_philos *philo, int f);
 int					take_forks(t_philos *philo);
 // void			free_struct(t_struct *data);
 

@@ -6,17 +6,17 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:54:10 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 19:15:19 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/12 20:01:43 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	*am_i_dead(void *ph)
+void	*am_i_dead(t_philos *philo)
 {
-	t_philos	*philo;
+	t_data	*data;
 
-	philo = (t_philos *)ph;
+	data = philo->data;
 	while (1)
 	{
 		usleep(200);
@@ -25,6 +25,7 @@ void	*am_i_dead(void *ph)
 			sem_wait(philo->data->starve);
 			if (philo->must_eat_time < get_time(philo))
 			{
+				sem_post(philo->data->starve);
 				sem_wait(philo->data->print);
 				printf("%lu %d died\n", get_time(philo), philo->id);
 				exit (1);
