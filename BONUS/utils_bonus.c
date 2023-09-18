@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:57:26 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:10:22 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 21:49:25 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,19 @@ int	print_error(char *str)
 	return (0);
 }
 
-void	ft_print(t_philos *philo, char *str)
+void	ft_print(t_philos *philo, char *str, int flag)
 {
+	sem_wait(philo->data->death);
+	if (*philo->fin_flag == 1)
+	{
+		sem_post(philo->data->death);
+		if (flag == 1 || flag == 2)
+			sem_post(philo->data->forks);
+		if (flag == 2)
+			sem_post(philo->data->forks);
+		exit (1);
+	}
+	sem_post(philo->data->death);
 	sem_wait(philo->data->print);
 	printf("%lu %d %s", get_time(philo), philo->id, str);
 	sem_post(philo->data->print);

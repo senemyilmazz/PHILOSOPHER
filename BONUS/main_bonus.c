@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:31:06 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:00:06 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 02:27:15 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	grim_reaper(int *pid, int philo_num)
 	int	i;
 	int	status;
 
-	while (1)
+	i = -1;
+	while (++i < philo_num)
 	{
 		waitpid(-1, &status, 0);
 		if (status != 0)
@@ -26,7 +27,6 @@ static void	grim_reaper(int *pid, int philo_num)
 			while (++i < philo_num)
 				kill(pid[i], SIGTERM);
 		}
-		break ;
 	}
 }
 
@@ -43,7 +43,7 @@ static int	let_the_game_begin(t_data *data, int philo_num)
 		if (data->pid[i] < -1)
 			return (print_error("fork() error!\n"));
 		if (data->pid[i] == 0)
-			am_i_dead(&philo[i]);
+			life_cycle(&philo[i]);
 	}
 	grim_reaper(data->pid, philo_num);
 	return (1);

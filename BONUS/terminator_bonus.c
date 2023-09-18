@@ -6,15 +6,17 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:54:10 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:39:05 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 23:46:38 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
 
-void	*am_i_dead(t_philos *philo)
+void	*am_i_dead(void *ph)
 {
-	pthread_create(&philo->thread, 0, &life_cycle, (void *)philo);
+	t_philos	*philo;
+
+	philo = (t_philos *)ph;
 	while (1)
 	{
 		usleep(200);
@@ -24,7 +26,10 @@ void	*am_i_dead(t_philos *philo)
 			{
 				sem_wait(philo->data->print);
 				printf("%lu %d died\n", get_time(philo), philo->id);
-				exit (1);
+				sem_wait(philo->data->death);
+				*philo->fin_flag = 1;
+				sem_post(philo->data->death);
+				break ;
 			}
 		}
 	}

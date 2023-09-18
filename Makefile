@@ -16,7 +16,7 @@ SRCB =	./BONUS/main_bonus.c \
 		./BONUS/utils_bonus.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=thread
 RM = rm -rf
 NAMES = philo
 NAMEB = philo_bonus
