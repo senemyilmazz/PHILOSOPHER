@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:31:06 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 19:52:36 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:00:06 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,13 @@ static int	let_the_game_begin(t_data *data, int philo_num)
 	i = -1;
 	while (++i < philo_num)
 	{
-		philo->pid[i] = fork();
-		if (philo->pid[i] < -1)
+		data->pid[i] = fork();
+		if (data->pid[i] < -1)
 			return (print_error("fork() error!\n"));
-		if (philo->pid[i] == 0)
-		{
-			pthread_create(philo[i].thread, 0, &life_cycle, (void *)&philo[i]);
+		if (data->pid[i] == 0)
 			am_i_dead(&philo[i]);
-		}
 	}
-	grim_reaper(philo->pid, philo_num);
+	grim_reaper(data->pid, philo_num);
 	return (1);
 }
 

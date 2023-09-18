@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:30:20 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 20:04:46 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:36:27 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ static void	sleeping(t_philos *philo)
 
 static void	eating(t_philos *philo)
 {
-	t_data	*data;
-
-	data = philo->data;
 	if (count_of_meal(philo, 0) == 0)
 		exit (0);
 	take_forks(philo);
 	ft_print(philo, EAT);
-	philo->must_eat_time = get_time(philo) + philo->time_to_die;
+	must_eat_time(philo, 1);
 	eating_proccess(philo);
 	sem_post(philo->data->forks);
 	sem_post(philo->data->forks);
@@ -49,13 +46,8 @@ static void	eating(t_philos *philo)
 void	*life_cycle(void *ph)
 {
 	t_philos	*philo;
-	t_data		*data;
 
 	philo = (t_philos *)ph;
-	data = philo->data;
-	sem_wait(philo->data->starve);
-	philo->must_eat_time = philo->time_to_die;
-	sem_post(philo->data->starve);
 	get_time(philo);
 	while (1)
 	{

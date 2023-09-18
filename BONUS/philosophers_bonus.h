@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:02:30 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 20:05:18 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:36:40 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ typedef struct s_philos
 	int				time_to_sleep;
 	int				count_of_meals;
 	unsigned long	must_eat_time;
-	int				*pid;
-	pthread_t		*thread;
+	pthread_t		thread;
 	struct s_data	*data;
 }					t_philos;
 
@@ -48,6 +47,7 @@ typedef struct s_data
 	sem_t			*forks;
 	sem_t			*print;
 	sem_t			*starve;
+	sem_t			*must_eat;
 	pthread_t		*threads;
 	int				*pid;
 	t_philos		*philo;
@@ -65,6 +65,7 @@ unsigned long		get_time(t_philos *philo);
 void				eating_proccess(t_philos *philo);
 void				ft_print(t_philos *philo, char *str);
 int					take_forks(t_philos *philo);
+unsigned long		must_eat_time(t_philos *philo, int flag);
 // void			free_struct(t_struct *data);
 
 #endif

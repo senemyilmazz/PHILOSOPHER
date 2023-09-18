@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:37:49 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 20:03:26 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/18 19:36:14 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	take_forks(t_philos *philo)
 {
-	t_data	*data;
-
-	data = philo->data;
 	sem_wait(philo->data->forks);
 	ft_print(philo, FORK);
 	sem_wait(philo->data->forks);
@@ -40,13 +37,23 @@ void	eating_proccess(t_philos *philo)
 int	count_of_meal(t_philos *philo, int flag)
 {
 	int		value;
-	t_data	*data;
 
-	data = philo->data;
 	sem_wait(philo->data->starve);
 	if (flag == 1 && philo->count_of_meals != -2)
 		philo->count_of_meals--;
 	value = philo->count_of_meals;
 	sem_post(philo->data->starve);
+	return (value);
+}
+
+unsigned long	must_eat_time(t_philos *philo, int flag)
+{
+	int		value;
+
+	sem_wait(philo->data->must_eat);
+	if (flag == 1)
+		philo->must_eat_time = get_time(philo) + philo->time_to_die;
+	value = philo->must_eat_time;
+	sem_post(philo->data->must_eat);
 	return (value);
 }
