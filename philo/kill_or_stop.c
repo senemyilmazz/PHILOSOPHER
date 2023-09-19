@@ -6,11 +6,23 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 04:48:11 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 05:13:15 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:23:36 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	anybody_dead(t_philos *philo)
+{
+	int	value;
+
+	pthread_mutex_lock(philo->dead);
+	value = *philo->fin_flag;
+	if (value == 1)
+		leave_forks(philo);
+	pthread_mutex_unlock(philo->dead);
+	return (value);
+}
 
 static int	terminator(t_philos *philo)
 {
@@ -61,21 +73,4 @@ int	are_they_hungry(t_struct *data)
 		if (count_of_meal(&data->philo[i], 0) != 0)
 			return (0);
 	return (1);
-}
-
-void	kill_or_stop(t_struct *data)
-{
-	int	i;
-
-	i = 0;
-	while (1)
-	{
-		if (i == data->num_philo)
-			i = 0;
-		if (are_they_hungry(data))
-			break ;
-		if (am_i_dead(&data->philo[i++]) == 1)
-			break ;
-		usleep(200);
-	}
 }

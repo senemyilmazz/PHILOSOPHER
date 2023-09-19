@@ -5,21 +5,18 @@ SRCB =	main_bonus.c \
 		utils_bonus.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror  -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 NAME = philo_bonus
 
-all : ${NAME} 
+all : ${NAME}
 
 ${NAME}:
 	@${CC} ${CFLAGS} ${SRCB} -o ${NAME}
 
-clean:
-	@${RM} ${NAME}
-
-fclean: clean
+fclean:
 	@${RM} ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all fclean re

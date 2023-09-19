@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:55:36 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 05:10:54 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:08:08 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static int	fill_philo(t_philos *philo, t_struct *data, char **argv, int i)
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
-	philo->count_of_meals = -2;
-	if (argv[5])
-		philo->count_of_meals = ft_atoi(argv[5]);
+	philo->count_of_meals = data->count_of_meals;
 	philo->fin_flag = &data->fin_flag;
 	philo->start_time = &data->start_time;
 	philo->dead = &data->dead;

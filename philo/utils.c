@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 04:53:39 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 04:55:32 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 09:29:49 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@ unsigned long	get_time(t_philos *philo)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000) - *philo->start_time);
-}
-
-int	anybody_dead(t_philos *philo)
-{
-	int	value;
-
-	pthread_mutex_lock(philo->dead);
-	value = *philo->fin_flag;
-	if (value == 1)
-		leave_forks(philo);
-	pthread_mutex_unlock(philo->dead);
-	return (value);
 }
 
 int	ft_print(t_philos *philo, char *str)

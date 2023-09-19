@@ -7,18 +7,18 @@ SRCS = 	main.c \
 		utils.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror  -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 NAME = philo
 
 all : ${NAME}
 
-${NAME}: 
+${NAME}:
 	@${CC} ${CFLAGS} ${SRCS} -o ${NAME}
 
-fclean: clean
+fclean:
 	@${RM} ${NAME}
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all fclean re
