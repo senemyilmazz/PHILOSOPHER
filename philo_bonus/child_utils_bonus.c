@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eating_utils_bonus.c                               :+:      :+:    :+:   */
+/*   child_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:37:49 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:36:14 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:24:44 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
-
-int	take_forks(t_philos *philo)
-{
-	sem_wait(philo->data->forks);
-	ft_print(philo, FORK);
-	sem_wait(philo->data->forks);
-	ft_print(philo, FORK);
-	return (0);
-}
 
 void	eating_proccess(t_philos *philo)
 {
 	unsigned long	time_to_be_full;
 
 	time_to_be_full = get_time(philo) + philo->time_to_eat;
-	while (1)
+	while (am_i_dead(philo))
 	{
 		if (get_time(philo) >= time_to_be_full)
 			break ;
@@ -38,22 +29,47 @@ int	count_of_meal(t_philos *philo, int flag)
 {
 	int		value;
 
-	sem_wait(philo->data->starve);
 	if (flag == 1 && philo->count_of_meals != -2)
 		philo->count_of_meals--;
 	value = philo->count_of_meals;
-	sem_post(philo->data->starve);
+	if (value == 0)
+		exit (0);
 	return (value);
 }
 
-unsigned long	must_eat_time(t_philos *philo, int flag)
+int	am_i_dead(t_philos *philo)
 {
-	int		value;
+	if (count_of_meal(philo, 0) != 0)
+	{
+		if (philo->must_eat_time < get_time(philo))
+		{
+			philo->fin_flag = 1;
+			sem_wait(philo->data->print);
+			printf("%lu %d died\n", get_time(philo), philo->id);
+			exit (1);
+		}
+	}
+	return (1);
+}
 
-	sem_wait(philo->data->must_eat);
-	if (flag == 1)
-		philo->must_eat_time = get_time(philo) + philo->time_to_die;
-	value = philo->must_eat_time;
-	sem_post(philo->data->must_eat);
-	return (value);
+void	ft_print(t_philos *philo, char *str)
+{
+	if (am_i_dead(philo))
+	{
+		sem_wait(philo->data->print);
+		printf("%lu %d %s", get_time(philo), philo->id, str);
+		sem_post(philo->data->print);
+	}
+}
+
+unsigned long	get_time(t_philos *philo)
+{
+	struct timeval			tv;
+	unsigned long			start_time;
+
+	gettimeofday(&tv, NULL);
+	start_time = 0;
+	if (philo)
+		start_time = philo->data->start_time;
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000) - start_time);
 }

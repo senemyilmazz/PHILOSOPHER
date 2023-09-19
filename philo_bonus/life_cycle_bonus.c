@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   life_cycle_bonus.c                                 :+:      :+:    :+:   */
+/*   thread_loop_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:30:20 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:36:27 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:32:03 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	sleeping(t_philos *philo)
 
 	time_to_wake_up = get_time(philo) + philo->time_to_sleep;
 	ft_print(philo, SLEEP);
-	while (1)
+	while (am_i_dead(philo))
 	{
 		if (get_time(philo) >= time_to_wake_up)
 			break ;
@@ -33,28 +33,30 @@ static void	sleeping(t_philos *philo)
 
 static void	eating(t_philos *philo)
 {
-	if (count_of_meal(philo, 0) == 0)
-		exit (0);
-	take_forks(philo);
+	count_of_meal(philo, 0);
+	sem_wait(philo->data->forks);
+	ft_print(philo, FORK);
+	sem_wait(philo->data->forks);
+	ft_print(philo, FORK);
 	ft_print(philo, EAT);
-	must_eat_time(philo, 1);
 	eating_proccess(philo);
+	philo->must_eat_time = get_time(philo) + philo->time_to_die;
 	sem_post(philo->data->forks);
 	sem_post(philo->data->forks);
 }
 
-void	*life_cycle(void *ph)
+void	*life_cycle(t_philos *philo)
 {
-	t_philos	*philo;
-
-	philo = (t_philos *)ph;
 	get_time(philo);
-	while (1)
+	if (philo->num_philo == 1)
 	{
-		usleep(200);
+		ft_print(philo, FORK);
+		usleep(1000 * philo->time_to_die);
+	}
+	while (am_i_dead(philo) || count_of_meal(philo, 0))
+	{
 		eating(philo);
-		if (count_of_meal(philo, 1) == 0)
-			exit (0);
+		count_of_meal(philo, 1);
 		sleeping(philo);
 		thinking(philo);
 	}

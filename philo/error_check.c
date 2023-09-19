@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   error_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 17:57:26 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:10:22 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:54:01 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers_bonus.h"
+#include "philosophers.h"
 
 int	check_arg(int argc, char **argv)
 {
@@ -19,7 +19,7 @@ int	check_arg(int argc, char **argv)
 
 	i = 0;
 	if (!(argc == 5 || argc == 6))
-		return (print_error("Invalid Arg!\n"));
+		return (print_error("Invalid Arg!\n", NULL));
 	while (++i < argc)
 	{
 		j = -1;
@@ -28,7 +28,7 @@ int	check_arg(int argc, char **argv)
 		while (argv[i][++j])
 		{
 			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
-				return (print_error("Invalid Arg!\n"));
+				return (print_error("Invalid Arg!\n", NULL));
 		}
 	}
 	if (!ft_atoi(argv[1]))
@@ -62,15 +62,16 @@ int	ft_atoi(const char *str)
 	return ((int)result);
 }
 
-int	print_error(char *str)
+int	print_error(char *str, t_struct *data)
 {
 	printf("%s", str);
+	if (data)
+	{
+		if (data->philo)
+			free(data->philo);
+		if (data->forks)
+			free(data->forks);
+	}
+	free(data);
 	return (0);
-}
-
-void	ft_print(t_philos *philo, char *str)
-{
-	sem_wait(philo->data->print);
-	printf("%lu %d %s", get_time(philo), philo->id, str);
-	sem_post(philo->data->print);
 }

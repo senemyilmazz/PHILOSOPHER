@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_loop.c                                      :+:      :+:    :+:   */
+/*   life_cycle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 18:30:20 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 07:45:13 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:54:15 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ static int	sleeping(t_philos *philo)
 	calculate(&time_to_wake_up, philo, 5);
 	if (ft_print(philo, SLEEP))
 		return (1);
-	while (1)
+	while (anybody_dead(philo) == 0)
 	{
 		if (get_time(philo) >= time_to_wake_up)
-			break ;
-		if (anybody_dead(philo))
-			return (1);
+			return (0);
 		usleep(100);
 	}
-	return (0);
+	return (1);
 }
 
 static int	eating(t_philos *philo)

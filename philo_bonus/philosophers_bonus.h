@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:02:30 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/18 19:36:40 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 05:15:07 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@
 typedef struct s_philos
 {
 	int				id;
+	int				fin_flag;
 	int				num_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				count_of_meals;
 	unsigned long	must_eat_time;
-	pthread_t		thread;
 	struct s_data	*data;
 }					t_philos;
 
@@ -46,26 +46,21 @@ typedef struct s_data
 	int				num_philo;
 	sem_t			*forks;
 	sem_t			*print;
-	sem_t			*starve;
-	sem_t			*must_eat;
-	pthread_t		*threads;
-	int				*pid;
 	t_philos		*philo;
+	int				*pid;
 	unsigned long	start_time;
 }					t_data;
 
 int					check_arg(int argc, char **argv);
 int					print_error(char *str);
 int					ft_atoi(const char *str);
-void				*life_cycle(void *ph);
-int					count_of_meal(t_philos *philo, int flag);
 int					fill_data(t_data *data, char **argv);
-void				*am_i_dead(t_philos *philo);
 unsigned long		get_time(t_philos *philo);
-void				eating_proccess(t_philos *philo);
+void				*life_cycle(t_philos *philo);
 void				ft_print(t_philos *philo, char *str);
-int					take_forks(t_philos *philo);
-unsigned long		must_eat_time(t_philos *philo, int flag);
-// void			free_struct(t_struct *data);
+void				eating_proccess(t_philos *philo);
+int					am_i_dead(t_philos *philo);
+int					count_of_meal(t_philos *philo, int flag);
+void				destroy_all(t_data *data);
 
 #endif

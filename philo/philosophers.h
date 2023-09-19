@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:45:37 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 03:07:17 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 05:15:22 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int				print_error(char *str, t_struct *data);
 int				ft_atoi(const char *str);
 int				fill_data(t_struct	*data, char **argv);
 void			*life_cycle(void *ph);
+void			kill_or_stop(t_struct *data);
 int				count_of_meal(t_philos *philo, int flag);
 int				are_they_hungry(t_struct *data);
 int				anybody_dead(t_philos *philo);

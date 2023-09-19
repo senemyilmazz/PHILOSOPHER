@@ -1,16 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mealCount.c                                        :+:      :+:    :+:   */
+/*   kill_or_stop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 20:12:58 by senyilma          #+#    #+#             */
-/*   Updated: 2023/08/23 19:34:05 by senyilma         ###   ########.fr       */
+/*   Created: 2023/09/19 04:48:11 by senyilma          #+#    #+#             */
+/*   Updated: 2023/09/19 05:13:15 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static int	terminator(t_philos *philo)
+{
+	pthread_mutex_lock(philo->dead);
+	if (*philo->fin_flag == 0)
+	{
+		*philo->fin_flag = 1;
+		printf("%lu %d died\n", get_time(philo), philo->id);
+		leave_forks(philo);
+	}
+	pthread_mutex_unlock(philo->dead);
+	pthread_mutex_unlock(&philo->starve);
+	return (1);
+}
+
+int	am_i_dead(t_philos *philo)
+{
+	if (anybody_dead(philo) == 0 && count_of_meal(philo, 0) != 0)
+	{
+		pthread_mutex_lock(&philo->starve);
+		if (philo->must_eat_time < get_time(philo))
+			return (terminator(philo));
+		pthread_mutex_unlock(&philo->starve);
+	}
+	return (0);
+}
 
 int	count_of_meal(t_philos *philo, int flag)
 {
@@ -35,4 +61,21 @@ int	are_they_hungry(t_struct *data)
 		if (count_of_meal(&data->philo[i], 0) != 0)
 			return (0);
 	return (1);
+}
+
+void	kill_or_stop(t_struct *data)
+{
+	int	i;
+
+	i = 0;
+	while (1)
+	{
+		if (i == data->num_philo)
+			i = 0;
+		if (are_they_hungry(data))
+			break ;
+		if (am_i_dead(&data->philo[i++]) == 1)
+			break ;
+		usleep(200);
+	}
 }

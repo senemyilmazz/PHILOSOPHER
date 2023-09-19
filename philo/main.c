@@ -6,28 +6,11 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:37:41 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/12 03:01:14 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:49:26 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static void	kill_or_stop(t_struct *data)
-{
-	int	i;
-
-	i = 0;
-	while (1)
-	{
-		if (i == data->num_philo)
-			i = 0;
-		if (are_they_hungry(data))
-			break ;
-		if (am_i_dead(&data->philo[i++]) == 1)
-			break ;
-		usleep(200);
-	}
-}
 
 static int	let_the_game_begin(t_struct *data, t_philos *philo)
 {
