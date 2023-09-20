@@ -4,6 +4,8 @@ SRCB =	main_bonus.c \
 		life_cycle_bonus.c \
 		utils_bonus.c
 
+DIR = ./obj/
+OBJB = ${addprefix ${DIR}, ${SRCB:.c=.o}}
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
@@ -11,11 +13,15 @@ NAME = philo_bonus
 
 all : ${NAME}
 
-${NAME}:
-	@${CC} ${CFLAGS} ${SRCB} -o ${NAME}
+${NAME}: ${OBJB}
+	@${CC} ${CFLAGS} ${OBJB} -o ${NAME}
+
+${DIR}%.o : %.c
+	@mkdir -p ${DIR}
+	@${CC} ${CFLAGS} -c $< -o $@
 
 fclean:
-	@${RM} ${NAME}
+	@${RM} ${NAME} ${DIR}
 
 re: fclean all
 
