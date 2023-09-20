@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 04:48:11 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/20 18:59:33 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:10:10 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	terminator(t_philos *philo)
 	if (*philo->fin_flag == 0)
 	{
 		*philo->fin_flag = 1;
-		printf("\033[0;91m%lu %d died\n\033[0m", get_time(philo), philo->id);
+		printf("\033[0;91m%lu	%d	died\n\033[0m", get_time(philo), philo->id);
 		leave_forks(philo);
 	}
 	pthread_mutex_unlock(philo->dead);

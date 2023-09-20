@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:45:37 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/20 17:18:22 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:35:31 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-# define FORK "has taken a fork\n"
-# define EAT "is eating\n"
-# define SLEEP "is sleeping\n"
-# define THINK "is thinking\n"
+# define FORK "\033[0;95mhas taken a fork\n\033[0m"
+# define EAT "\033[0;93mis eating\n\033[0m"
+# define SLEEP "\033[0;92mis sleeping\n\033[0m"
+# define THINK "\033[0;96mis thinking\n\033[0m"
 
-# define PURPLE "\033[0;95m"
-# define CYAN "\033[0;96m"
-# define GREEN "\033[0;92m"
+# define BLUE "\033[0;94m"
 # define END "\033[0m"
 
 typedef struct s_philos
