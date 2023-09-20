@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:37:49 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/20 19:34:27 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 19:46:53 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_print(t_philos *philo, char *str)
 	if (am_i_dead(philo))
 	{
 		sem_wait(philo->data->print);
-		printf("%s%lu	%d%s	%s%s%s", BLUE, get_time(philo),
+		printf("%s%lu	%d%s	%s", BLUE, get_time(philo),
 			philo->id, END, str);
 		sem_post(philo->data->print);
 	}
