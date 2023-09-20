@@ -1,5 +1,5 @@
 SRCS = 	main.c \
-		error_check.c \
+		arg_check.c \
 		fill_struct.c \
 		kill_or_stop.c \
 		life_cycle.c \

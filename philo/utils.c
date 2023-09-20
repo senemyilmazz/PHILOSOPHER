@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 04:53:39 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/20 19:26:32 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:07:12 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,11 @@ void	calculate(unsigned long *time, t_philos *philo, int f)
 	if (f == 2)
 	{
 		pthread_mutex_lock(&philo->starve);
-		*time = philo->time_to_die;
-		pthread_mutex_unlock(&philo->starve);
-	}
-	if (f == 3)
-	{
-		pthread_mutex_lock(&philo->starve);
 		*time = get_time(philo) + philo->time_to_die;
 		pthread_mutex_unlock(&philo->starve);
 	}
-	if (f == 4)
+	if (f == 3)
 		*time = get_time(philo) + philo->time_to_eat;
-	if (f == 5)
+	if (f == 4)
 		*time = get_time(philo) + philo->time_to_sleep;
 }

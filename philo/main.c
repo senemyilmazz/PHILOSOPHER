@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 18:37:41 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 09:23:42 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:43:51 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	let_the_game_begin(t_struct *data, t_philos *philo)
 	kill_or_stop(data);
 	i = -1;
 	while (++i < data->num_philo)
-		pthread_join(data->philo[i].thr, 0);
+		if (pthread_join(data->philo[i].thr, 0))
+			return (1);
 	return (0);
 }
 
@@ -59,7 +60,7 @@ int	main(int argc, char **argv)
 		if (fill_data(data, argv) == 0)
 			return (0);
 		if (let_the_game_begin(data, data->philo))
-			return (print_error("Thread creating error!\n", data));
+			return (print_error("Somehow thread went wrong!\n", data));
 		free_struct(data);
 	}
 	return (0);

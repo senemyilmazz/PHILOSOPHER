@@ -6,11 +6,34 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:37:49 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/20 19:46:53 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 20:20:29 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers_bonus.h"
+
+unsigned long	get_time(t_philos *philo)
+{
+	struct timeval			tv;
+	unsigned long			start_time;
+
+	gettimeofday(&tv, NULL);
+	start_time = 0;
+	if (philo)
+		start_time = philo->data->start_time;
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000) - start_time);
+}
+
+void	ft_print(t_philos *philo, char *str)
+{
+	if (am_i_dead(philo))
+	{
+		sem_wait(philo->data->print);
+		printf("%s%lu	%d%s	%s", BLUE, get_time(philo),
+			philo->id, END, str);
+		sem_post(philo->data->print);
+	}
+}
 
 void	eating_proccess(t_philos *philo)
 {
@@ -51,27 +74,4 @@ int	am_i_dead(t_philos *philo)
 		}
 	}
 	return (1);
-}
-
-void	ft_print(t_philos *philo, char *str)
-{
-	if (am_i_dead(philo))
-	{
-		sem_wait(philo->data->print);
-		printf("%s%lu	%d%s	%s", BLUE, get_time(philo),
-			philo->id, END, str);
-		sem_post(philo->data->print);
-	}
-}
-
-unsigned long	get_time(t_philos *philo)
-{
-	struct timeval			tv;
-	unsigned long			start_time;
-
-	gettimeofday(&tv, NULL);
-	start_time = 0;
-	if (philo)
-		start_time = philo->data->start_time;
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000) - start_time);
 }

@@ -2,7 +2,7 @@ SRCB =	main_bonus.c \
 		child_utils_bonus.c \
 		fill_struct_bonus.c \
 		life_cycle_bonus.c \
-		utils_bonus.c
+		arg_check_bonus.c
 
 DIR = ./obj/
 OBJB = ${addprefix ${DIR}, ${SRCB:.c=.o}}
