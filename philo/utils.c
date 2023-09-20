@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 04:53:39 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 09:29:49 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 17:27:08 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	ft_print(t_philos *philo, char *str)
 		pthread_mutex_unlock(philo->dead);
 		return (1);
 	}
-	printf("%lu %d %s", get_time(philo), philo->id, str);
+	printf("%s%lu%s %s%d%s %s%s%s", CYAN, get_time(philo),
+		END, GREEN, philo->id, END, PURPLE, str, END);
 	pthread_mutex_unlock(philo->dead);
 	return (0);
 }

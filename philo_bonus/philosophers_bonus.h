@@ -6,7 +6,7 @@
 /*   By: senyilma <senyilma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:02:30 by senyilma          #+#    #+#             */
-/*   Updated: 2023/09/19 05:15:07 by senyilma         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:53:15 by senyilma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define EAT "is eating\n"
 # define SLEEP "is sleeping\n"
 # define THINK "is thinking\n"
+
+# define PURPLE "\033[0;95m"
+# define CYAN "\033[0;96m"
+# define GREEN "\033[0;92m"
+# define END "\033[0m"
 
 typedef struct s_philos
 {
